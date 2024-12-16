@@ -56,3 +56,33 @@ async function deleteIdea(id) {
 }
 
 fetchIdeas();
+
+function promptSubIdeaInput(button) {
+  const parent = button.parentElement;
+  let inputForm = parent.querySelector('.sub-idea-form');
+    inputForm = document.createElement('div');
+    inputForm.className = 'sub-idea-form';
+    inputForm.innerHTML = `
+      <input type='text' placeholder='Sub-Idea Title' class='sub-idea-input' />
+      <button onclick='submitSubIdea(this)'>Add</button>
+      <button onclick='cancelSubIdea(this)'>Cancel</button>
+    `;
+    parent.appendChild(inputForm);
+  }
+  parent.querySelector('.sub-idea-input').focus();
+}
+
+function submitSubIdea(button) {
+  const input = button.parentElement.querySelector('.sub-idea-input');
+  const title = input.value.trim();
+  if (title) {
+    const parentId = button.closest('li').getAttribute('data-id');
+    addSubIdea(parentId, title);
+  }
+  button.parentElement.remove();
+}
+
+function cancelSubIdea(button) {
+  button.parentElement.remove();
+}
+
